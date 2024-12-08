@@ -11,7 +11,7 @@ const updateFormData = (e) => {
  setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-const toggleNewUser = (e) => {
+const toggleNewUser = () => {
   setIsNewUser(!isNewUser);
   setFormData(EMPTY_FORM_DATA);
   };
