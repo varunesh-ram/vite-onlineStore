@@ -5,6 +5,7 @@ import "./index.css";
 const Login = () => {
 const [formData,setFormData] = useState(EMPTY_FORM_DATA);
 const [isNewUser, setIsNewUser] = useState(false);
+const [isPasswordMatch, setIsPasswordMatch] = useState(false);
 
 
 const updateFormData = (e) => {
@@ -16,7 +17,7 @@ const toggleNewUser = () => {
   setFormData(EMPTY_FORM_DATA);
   };
 
-  const validateLoginForm = () => {
+  const isLoginFormInvalid = () => {
     return isFieldEmptyInLoginForm();
   };
 
@@ -24,9 +25,13 @@ const toggleNewUser = () => {
     return !formData.username || !formData.password;
   }
 
-  const validateRegisterForm = () => {
-    return isFieldEmptyInRegisterForm();
+  const isRegisterFormInvalid = () => {
+    return isFieldEmptyInRegisterForm() || isPasswordMismatch();
   };
+
+  const isPasswordMismatch = () =>{
+    return formData.password !== formData.confirmPassword;
+  }
 
   const isFieldEmptyInRegisterForm=() => {
     return !formData.username || !formData.password || !formData.firstName || !formData.lastName || !formData.confirmPassword
@@ -52,7 +57,7 @@ const toggleNewUser = () => {
                 <input type="password" name="confirmPassword" placeholder={CONFIRM_PASSWORD} value={formData.confirmPassword}
                           onChange={updateFormData}/>
          )}
-        <button className="form-button" data-testid="login-id" onClick={()=>{}} disabled={isNewUser?validateRegisterForm():validateLoginForm()}>
+        <button className="form-button" data-testid="login-id" onClick={()=>{}} disabled={isNewUser?isRegisterFormInvalid():isLoginFormInvalid()}>
             {isNewUser ? REGISTER : LOGIN}
         </button>
         <button className={"form-button already-user"} data-testid="toggle-user-type"
