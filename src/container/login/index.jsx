@@ -16,6 +16,22 @@ const toggleNewUser = () => {
   setFormData(EMPTY_FORM_DATA);
   };
 
+  const validateLoginForm = () => {
+    return isFieldEmptyInLoginForm();
+  };
+
+  const isFieldEmptyInLoginForm=() => {
+    return !formData.username || !formData.password;
+  }
+
+  const validateRegisterForm = () => {
+    return isFieldEmptyInRegisterForm();
+  };
+
+  const isFieldEmptyInRegisterForm=() => {
+    return !formData.username || !formData.password || !formData.firstName || !formData.lastName || !formData.confirmPassword
+  }
+
  return (
     <div className="login-container">
       <div className="login-form">
@@ -36,7 +52,7 @@ const toggleNewUser = () => {
                 <input type="password" name="confirmPassword" placeholder={CONFIRM_PASSWORD} value={formData.confirmPassword}
                           onChange={updateFormData}/>
          )}
-        <button className="form-button" data-testid="login-id" onClick={()=>{}} >
+        <button className="form-button" data-testid="login-id" onClick={()=>{}} disabled={isNewUser?validateRegisterForm():validateLoginForm()}>
             {isNewUser ? REGISTER : LOGIN}
         </button>
         <button className={"form-button already-user"} data-testid="toggle-user-type"
